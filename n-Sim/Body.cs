@@ -17,6 +17,12 @@ namespace n_Sim
             this.mass = mass;
         }
 
+        public double getRadius2D()
+        {
+            double r = Math.Pow((mass / Math.PI), 0.5);
+            return r;
+        }
+
         public double getRadius()
         {
             double r = Math.Pow(((this.mass * 0.75) / Math.PI), 1.0 / 3);
@@ -26,7 +32,7 @@ namespace n_Sim
         public void drawBody(Graphics g)
         {
             Pen myPen = new Pen(Color.White);
-            double radius = getRadius();
+            double radius = getRadius2D();
             g.DrawEllipse(myPen, x - Convert.ToInt32(radius / 2), y - Convert.ToInt32(radius / 2), Convert.ToInt32(radius), Convert.ToInt32(radius));
             myPen.Dispose();
         }

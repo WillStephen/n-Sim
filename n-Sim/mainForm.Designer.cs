@@ -36,7 +36,6 @@
             // frameUpdater
             // 
             this.frameUpdater.Enabled = true;
-            this.frameUpdater.Interval = 200;
             this.frameUpdater.Tick += new System.EventHandler(this.frameUpdater_Tick);
             // 
             // label1

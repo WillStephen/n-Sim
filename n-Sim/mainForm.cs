@@ -15,26 +15,27 @@ namespace n_Sim
     {
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(120, 120, 1, 1, 10000000);
-        Body b2 = new Body(239, 120, 2, 1, 10000000);
-       
+        Body b1 = new Body(120, 120, 1, 1, 1000);
+        Body b2 = new Body(239, 120, 2, 1, 2000);
+        
         public mainForm()
         {
             InitializeComponent();
             bodyList.Add(b1);
+            bodyList.Add(b2);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             frameUpdater.Start();
             g = this.CreateGraphics();
-            
         }
         private void mainForm_Paint(object sender, PaintEventArgs e)
         {
             foreach (Body b in bodyList)
             {
                 b.drawBody(g);
+                Console.WriteLine("drawing...");
             }
         }
         
