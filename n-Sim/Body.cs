@@ -20,9 +20,7 @@ namespace n_Sim
         public void drawBody(Graphics g)
         {
             Pen myPen = new Pen(Color.White);
-            //g.DrawEllipse(myPen, x-mass, y-mass, x+(mass*2), y+(mass*2));
             g.DrawEllipse(myPen, x-(mass/2), y-(mass/2), mass, mass);
-            System.Console.WriteLine("memes");
         }
     }
 }
