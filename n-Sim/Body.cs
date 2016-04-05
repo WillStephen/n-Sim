@@ -8,22 +8,17 @@ namespace n_Sim
         int x, y, xspeed, yspeed;
         double mass;
 
-        public Body(Graphics g, int x, int y, int xspeed, int yspeed, double mass)
+        public Body(int x, int y, int xspeed, int yspeed, double mass)
         {
             this.x = x;
             this.y = y;
             this.xspeed = xspeed;
             this.yspeed = yspeed;
             this.mass = mass;
-            drawBody(g);
         }
 
         public double getRadius()
         {
-            //m = 4(pir^3)/3
-            //3m = 4(pi*r^3)
-            //3/4m = pi*r^3
-            //cbrt(3/4m/pi) = r
             double r = Math.Pow(((this.mass * 0.75) / Math.PI), 1.0 / 3);
             return r;
         }
