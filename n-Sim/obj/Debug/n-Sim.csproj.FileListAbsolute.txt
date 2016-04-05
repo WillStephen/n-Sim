@@ -1,1 +1,9 @@
 C:\Users\User\n-Sim\n-Sim\n-Sim\bin\Debug\n-Sim.exe.config
+C:\Users\User\n-Sim\n-Sim\n-Sim\bin\Debug\n-Sim.exe
+C:\Users\User\n-Sim\n-Sim\n-Sim\bin\Debug\n-Sim.pdb
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n-Sim.csprojResolveAssemblyReference.cache
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n_Sim.mainForm.resources
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n_Sim.Properties.Resources.resources
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n-Sim.csproj.GenerateResource.Cache
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n-Sim.exe
+C:\Users\User\n-Sim\n-Sim\n-Sim\obj\Debug\n-Sim.pdb
