@@ -5,16 +5,21 @@ namespace n_Sim
 {
     internal class Body
     {
-        int x, y, xspeed, yspeed;
-        double mass;
+        public double x, y, xspeed, yspeed, mass;
 
-        public Body(int x, int y, int xspeed, int yspeed, double mass)
+        public Body(double x, double y, double xspeed, double yspeed, double mass)
         {
             this.x = x;
             this.y = y;
             this.xspeed = xspeed;
             this.yspeed = yspeed;
             this.mass = mass;
+        }
+
+        public void accelerate(double xacc, double yacc)
+        {
+            this.xspeed += xacc;
+            this.yspeed += yacc;
         }
 
         public double getRadius2D()
@@ -33,7 +38,7 @@ namespace n_Sim
         {
             Pen myPen = new Pen(Color.White);
             double radius = getRadius2D();
-            g.DrawEllipse(myPen, x - Convert.ToInt32(radius / 2), y - Convert.ToInt32(radius / 2), Convert.ToInt32(radius), Convert.ToInt32(radius));
+            g.DrawEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
             myPen.Dispose();
         }
 

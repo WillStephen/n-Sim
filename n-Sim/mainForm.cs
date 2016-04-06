@@ -15,7 +15,7 @@ namespace n_Sim
     {
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(120, 120, 1, 1, 1000);
+        Body b1 = new Body(120, 120, 0.5, 0.5, 1000);
         Body b2 = new Body(239, 120, 2, 1, 2000);
         
         public mainForm()
@@ -35,26 +35,24 @@ namespace n_Sim
             foreach (Body b in bodyList)
             {
                 b.drawBody(g);
-                Console.WriteLine("drawing...");
             }
+            redrawBodies(bodyList);
         }
         
         private void frameUpdater_Tick(object sender, EventArgs e)
         {
-            redrawBodies(bodyList);
+            //redrawBodies(bodyList);
+            b1.accelerate(-0.01, -0.01);
+            b2.accelerate(-0.01, -0.01);
         }
 
         private void redrawBodies(List<Body> l)
         {
             foreach (Body b in l){
                 b.updatePosition();
-                b.drawBody(g);
             }
             this.Refresh();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-        }
     }
 }
