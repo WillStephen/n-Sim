@@ -17,20 +17,33 @@ namespace n_Sim
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(150, 250, 0, 0, 1000);
-        Body b2 = new Body(300, 120, 0, 0, 50000);
+        Body b1 = new Body(150, 200, 2.7, -1.5, 1000);
+        Body b2 = new Body(100, 150, 1, 0.2, 50000);
+        Body b3 = new Body(50, 100, 0, 1.5, 500);
 
         public mainForm()
         {
             InitializeComponent();
             bodyList.Add(b1);
             bodyList.Add(b2);
+            bodyList.Add(b3);
+        }
+
+        public double deg(double rad)
+        {
+            return rad * (180 / Math.PI);
+        }
+
+        public double rad(double deg)
+        {
+            return deg * (Math.PI / 180);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             g = this.CreateGraphics();
             frameUpdater.Start();
+            Console.WriteLine(meme(5, rad(35)));
         }
         private void mainForm_Paint(object sender, PaintEventArgs e)
         {
@@ -44,34 +57,51 @@ namespace n_Sim
         {
             
             redrawBodies(bodyList);
-            //b1.accelerate(-0.01, 0);
         }
 
-        private double getDistanceX(Body b1, Body b2)
+        private double getDistanceX(Body body1, Body body2)
         {
-            return (b2.x - b1.x);
+            return (body2.x - body1.x);
         }
 
-        private double getDistanceY(Body b1, Body b2)
+        private double getDistanceY(Body body1, Body body2)
         {
-            return (b2.y - b1.y);
+            return (body2.y - body1.y);
         }
 
-        private double getDistance(Body b1, Body b2)
+        private double getDistance(Body body1, Body body2)
         {
-            double xdiff = Math.Abs(b2.x - b1.x);
-            double ydiff = Math.Abs(b2.y - b1.y);
+            double xdiff = Math.Abs(body2.x - body1.x);
+            double ydiff = Math.Abs(body2.y - body1.y);
             return Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
         }
 
-        private double calcGravity(Body body1, Body body2)
+        private double getAngle(Body b1, Body b2)
         {
-            int isNegative = 1;
-            double dist = getDistance(body1, body2);
-            if (dist < 0) { isNegative = -1; }
-            return isNegative * GRAVCONST * ((body1.mass * body2.mass) / Math.Pow(dist, 2));
+            double diffX = b2.x - b1.x;
+            double diffY = b2.y - b1.y;
+            double rad = Math.Atan2(diffY, diffX);
+            return rad * (180 / Math.PI);
         }
 
+        private double gravForce(Body body1, Body body2)
+        {
+            return GRAVCONST * ((body1.mass * body2.mass) / Math.Pow(getDistance(body1, body2), 2));
+        }
+
+        private double calcGravX(Body body1, Body body2)
+        {
+            double force = gravForce(body1, body2);
+            double angle = getAngle(body1, body2);
+            return force * Math.Cos(rad(angle));
+        }
+
+        private double calcGravY(Body body1, Body body2)
+        {
+            double force = gravForce(body1, body2);
+            double angle = getAngle(body1, body2);
+            return force * Math.Sin(rad(angle));
+        }
 
         private void redrawBodies(List<Body> l)
         {
@@ -79,8 +109,18 @@ namespace n_Sim
                 b.updatePosition();
             }
             this.Refresh();
-            Console.WriteLine(calcGravityX(b1, b2));
+            b1.accelerate(calcGravX(b1, b2)/b1.mass, calcGravY(b1, b2)/b1.mass);
+            b3.accelerate(calcGravX(b3, b2) / b3.mass, calcGravY(b3, b2) / b3.mass);
+            xlab.Text = calcGravX(b1, b2).ToString();
+            ylab.Text = calcGravY(b1, b2).ToString();
+            ltotal.Text = gravForce(b1, b2).ToString();
         }
 
+        private double meme(double hyp, double angle)
+        {
+            return hyp * Math.Cos(angle);
+        }
+
+        
     }
 }
