@@ -17,8 +17,8 @@ namespace n_Sim
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(300, 120, 1, 1, 1000);
-        Body b2 = new Body(300, 120, 0, 0, 1000);
+        Body b1 = new Body(150, 250, 2, 0, 1000);
+        Body b2 = new Body(300, 120, 0, 0, 2000);
 
         public mainForm()
         {
@@ -44,23 +44,40 @@ namespace n_Sim
         {
             
             redrawBodies(bodyList);
-            b1.accelerate(-0.01, -0.01);
+            b1.accelerate(-0.01, 0);
         }
 
         private double getDistance(Body b1, Body b2)
         {
-            double distance = 0;
             double xdiff = Math.Abs(b2.x - b1.x);
             double ydiff = Math.Abs(b2.y - b1.y);
-            distance = Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
-            return distance;
+            return Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
         }
 
-        private double calcGravity(Body body1, Body body2)
+        private double getDistanceX(Body b1, Body b2)
+        {
+            return (b2.x - b1.x);
+        }
+
+        private double getDistanceY(Body b1, Body b2)
+        {
+            return (b2.y - b1.y);
+        }
+
+        private double calcGravityX(Body body1, Body body2)
         {
             double grav = 0;
 
-            grav = GRAVCONST * ((body1.mass * body2.mass) / Math.Pow((getDistance(body1, body2)), 2));
+            grav = GRAVCONST * ((body1.mass * body2.mass) / Math.Pow((getDistanceX(body1, body2)), 2));
+
+            return grav;
+        }
+
+        private double calcGravityY(Body body1, Body body2)
+        {
+            double grav = 0;
+
+            grav = GRAVCONST * ((body1.mass * body2.mass) / Math.Pow((getDistanceY(body1, body2)), 2));
 
             return grav;
         }
@@ -71,7 +88,9 @@ namespace n_Sim
                 b.updatePosition();
             }
             this.Refresh();
-            Console.WriteLine(calcGravity(b1, b2));
+            xlab.Text = calcGravityX(b1, b2).ToString();
+            ylab.Text = calcGravityY(b1, b2).ToString();
+            //Console.WriteLine(calcGravityX(b1, b2));
         }
 
     }
