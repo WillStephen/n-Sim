@@ -13,12 +13,12 @@ namespace n_Sim
 {
     public partial class mainForm : Form
     {
-        public readonly double GRAVCONST = 0.001;
+        public readonly double GRAVCONST = 0.01;
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(150, 250, 2, 0, 1000);
-        Body b2 = new Body(300, 120, 0, 0, 2000);
+        Body b1 = new Body(150, 250, 0, 0, 1000);
+        Body b2 = new Body(300, 120, 0, 0, 50000);
 
         public mainForm()
         {
@@ -44,14 +44,7 @@ namespace n_Sim
         {
             
             redrawBodies(bodyList);
-            b1.accelerate(-0.01, 0);
-        }
-
-        private double getDistance(Body b1, Body b2)
-        {
-            double xdiff = Math.Abs(b2.x - b1.x);
-            double ydiff = Math.Abs(b2.y - b1.y);
-            return Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
+            //b1.accelerate(-0.01, 0);
         }
 
         private double getDistanceX(Body b1, Body b2)
@@ -64,23 +57,21 @@ namespace n_Sim
             return (b2.y - b1.y);
         }
 
-        private double calcGravityX(Body body1, Body body2)
+        private double getDistance(Body b1, Body b2)
         {
-            double grav = 0;
-
-            grav = GRAVCONST * ((body1.mass * body2.mass) / Math.Pow((getDistanceX(body1, body2)), 2));
-
-            return grav;
+            double xdiff = Math.Abs(b2.x - b1.x);
+            double ydiff = Math.Abs(b2.y - b1.y);
+            return Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
         }
 
-        private double calcGravityY(Body body1, Body body2)
+        private double calcGravity(Body body1, Body body2)
         {
-            double grav = 0;
-
-            grav = GRAVCONST * ((body1.mass * body2.mass) / Math.Pow((getDistanceY(body1, body2)), 2));
-
-            return grav;
+            int isNegative = 1;
+            double dist = getDistance(body1, body2);
+            if (dist < 0) { isNegative = -1; }
+            return isNegative * GRAVCONST * ((body1.mass * body2.mass) / Math.Pow(dist, 2));
         }
+
 
         private void redrawBodies(List<Body> l)
         {
@@ -88,9 +79,7 @@ namespace n_Sim
                 b.updatePosition();
             }
             this.Refresh();
-            xlab.Text = calcGravityX(b1, b2).ToString();
-            ylab.Text = calcGravityY(b1, b2).ToString();
-            //Console.WriteLine(calcGravityX(b1, b2));
+            Console.WriteLine(calcGravityX(b1, b2));
         }
 
     }

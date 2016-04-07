@@ -37,7 +37,7 @@ namespace n_Sim
         public void drawBody(Graphics g)
         {
             Pen myPen = new Pen(Color.White);
-            double radius = getRadius2D();
+            double radius = getRadius();
             g.DrawEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
             myPen.Dispose();
         }
