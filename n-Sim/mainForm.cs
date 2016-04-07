@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace n_Sim
 {
@@ -17,9 +18,13 @@ namespace n_Sim
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(150, 200, 2.7, -1.5, 1000);
-        Body b2 = new Body(100, 150, 1, 0.2, 50000);
-        Body b3 = new Body(50, 100, 0, 1.5, 500);
+        Body b1 = new Body(900, 600, 0, -1.87, 70000);
+        Body b2 = new Body(800, 600, 0, 1.87, 70000);
+        Body b3 = new Body(1400, 150, -3, 0, 10);
+        Body b4 = new Body(100, 100, 0, 0, 100000);
+
+        int dragStartX, dragStartY;
+
 
         public mainForm()
         {
@@ -27,6 +32,7 @@ namespace n_Sim
             bodyList.Add(b1);
             bodyList.Add(b2);
             bodyList.Add(b3);
+            bodyList.Add(b4);
         }
 
         public double deg(double rad)
@@ -43,7 +49,6 @@ namespace n_Sim
         {
             g = this.CreateGraphics();
             frameUpdater.Start();
-            Console.WriteLine(meme(5, rad(35)));
         }
         private void mainForm_Paint(object sender, PaintEventArgs e)
         {
@@ -84,21 +89,21 @@ namespace n_Sim
             return rad * (180 / Math.PI);
         }
 
-        private double gravForce(Body body1, Body body2)
+        private double totalGravForce(Body body1, Body body2)
         {
             return GRAVCONST * ((body1.mass * body2.mass) / Math.Pow(getDistance(body1, body2), 2));
         }
 
         private double calcGravX(Body body1, Body body2)
         {
-            double force = gravForce(body1, body2);
+            double force = totalGravForce(body1, body2);
             double angle = getAngle(body1, body2);
             return force * Math.Cos(rad(angle));
         }
 
         private double calcGravY(Body body1, Body body2)
         {
-            double force = gravForce(body1, body2);
+            double force = totalGravForce(body1, body2);
             double angle = getAngle(body1, body2);
             return force * Math.Sin(rad(angle));
         }
@@ -109,18 +114,44 @@ namespace n_Sim
                 b.updatePosition();
             }
             this.Refresh();
-            b1.accelerate(calcGravX(b1, b2)/b1.mass, calcGravY(b1, b2)/b1.mass);
-            b3.accelerate(calcGravX(b3, b2) / b3.mass, calcGravY(b3, b2) / b3.mass);
-            xlab.Text = calcGravX(b1, b2).ToString();
-            ylab.Text = calcGravY(b1, b2).ToString();
-            ltotal.Text = gravForce(b1, b2).ToString();
-        }
+            calcAllBodiesAccel(bodyList);
+            Console.WriteLine(MouseButtons);
+            if (MouseButtons == MouseButtons.Left)
+            {
+                Pen p = new Pen(Color.White);
+                g.DrawLine(p, dragStartX, dragStartY, Cursor.Position.X, Cursor.Position.Y);
+            }
+        }  
 
-        private double meme(double hyp, double angle)
+        private void calcAllBodiesAccel(List<Body> l)
         {
-            return hyp * Math.Cos(angle);
+            foreach (Body b in l)
+            {
+                foreach (Body c in l)
+                {
+                    if (c != b)
+                    {
+                        b.accelerate(calcGravX(b, c) / b.mass, calcGravY(b, c) / b.mass);
+                    }
+                }
+            }
         }
 
-        
+        private void mainForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragStartX = Cursor.Position.X;
+            dragStartY = Cursor.Position.Y;
+        }
+
+        private void mainForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            double speedFactor = 0.1;
+            double xspeed = speedFactor * (dragStartX - Cursor.Position.X);
+            double yspeed = speedFactor * (dragStartY - Cursor.Position.Y);
+            Random r = new Random();
+            int m = r.Next(500, 1000000);
+            bodyList.Add(new Body(dragStartX, dragStartY, xspeed, yspeed, m));
+        }
+
     }
 }

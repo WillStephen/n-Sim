@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace n_Sim
 {
     internal class Body
     {
         public double x, y, xspeed, yspeed, mass;
+        public string name;
 
         public Body(double x, double y, double xspeed, double yspeed, double mass)
         {
