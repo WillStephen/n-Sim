@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.frameUpdater = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // frameUpdater
@@ -42,11 +43,27 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.DimGray;
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoSize = true;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(177, 96);
+            this.panel1.Size = new System.Drawing.Size(1246, 49);
             this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel2.BackColor = System.Drawing.Color.Black;
+            this.panel2.Location = new System.Drawing.Point(0, 47);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1246, 684);
+            this.panel2.TabIndex = 1;
             // 
             // mainForm
             // 
@@ -54,7 +71,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.ClientSize = new System.Drawing.Size(1246, 729);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainForm";
@@ -65,6 +83,7 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mainForm_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mainForm_MouseUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -72,6 +91,7 @@
 
         private System.Windows.Forms.Timer frameUpdater;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

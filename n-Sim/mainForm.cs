@@ -14,7 +14,7 @@ namespace n_Sim
 {
     public partial class mainForm : Form
     {
-        public readonly double GRAVCONST = 0.01;
+        public readonly double GRAVCONST = 0.001;
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
@@ -32,12 +32,13 @@ namespace n_Sim
             Random r = new Random();
             for (int i = 0; i < 50; i++)
             {
-                bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), 10000));
+                bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), r.Next(100, 20000)));
             }
             for (int i = 0; i < 2; i++)
             {
                 bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), 1000000));
             }
+            bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), 5000000));
 
             //bodyList.Add(b1);
             //bodyList.Add(b2);
@@ -57,7 +58,7 @@ namespace n_Sim
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            g = this.CreateGraphics();
+            g = panel2.CreateGraphics();
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             frameUpdater.Start();
         }

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="n-Sim.exe" size="291264">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="n-Sim.exe" size="292288">
       <assemblyIdentity name="n-Sim" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4hqvdCT91p9sKndDzYXsOpKofyq+HHOsY4pfEIBvZ1g=</dsig:DigestValue>
+        <dsig:DigestValue>MAR4BuJq85aIu91/jsZWwP/fzE/EXXdlzA1RRUwdz6I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -8,6 +8,7 @@ namespace n_Sim
     {
         public double x, y, xspeed, yspeed, mass, radius;
         public string name;
+        Color colour;
 
         public Body(double x, double y, double xspeed, double yspeed, double mass)
         {
@@ -17,6 +18,27 @@ namespace n_Sim
             this.yspeed = yspeed;
             this.mass = mass;
             this.radius = getRadius();
+            this.colour = getColour();
+        }
+
+        private Color getColour()
+        {
+            if (this.mass > 1000000)
+            {
+                return Color.Aquamarine;
+            }
+            if (this.mass > 100000)
+            {
+                return Color.OrangeRed;
+            }
+            if (this.mass > 10000)
+            {
+                return Color.Blue;
+            }
+            else
+            {
+                return Color.Green;
+            }
         }
 
         public void accelerate(double xacc, double yacc)
@@ -39,8 +61,9 @@ namespace n_Sim
 
         public void drawBody(Graphics g)
         {
-            Pen myPen = new Pen(Color.White);
-            g.DrawEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
+            SolidBrush myPen = new SolidBrush(colour);
+            g.FillEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
+            //g.DrawEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
             myPen.Dispose();
         }
 
