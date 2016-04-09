@@ -18,10 +18,10 @@ namespace n_Sim
 
         Graphics g = null;
         List<Body> bodyList = new List<Body>();
-        Body b1 = new Body(900, 600, 0, -1.87, 70000);
-        Body b2 = new Body(800, 600, 0, 1.87, 70000);
-        Body b3 = new Body(1400, 150, -3, 0, 10);
-        Body b4 = new Body(100, 100, 0, 0, 100000);
+        //Body b1 = new Body(900, 600, 0, -1.87, 70000);
+        //Body b2 = new Body(800, 600, 0, 1.87, 70000);
+        //Body b3 = new Body(1400, 150, -2, 1, 1000);
+        //Body b4 = new Body(100, 100, 0, 0, 100000);
 
         int dragStartX, dragStartY;
 
@@ -29,10 +29,20 @@ namespace n_Sim
         public mainForm()
         {
             InitializeComponent();
-            bodyList.Add(b1);
-            bodyList.Add(b2);
-            bodyList.Add(b3);
-            bodyList.Add(b4);
+            Random r = new Random();
+            for (int i = 0; i < 50; i++)
+            {
+                bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), 10000));
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                bodyList.Add(new Body(r.Next(10, 1910), r.Next(10, 1000), r.Next(0, 0), r.Next(0, 0), 1000000));
+            }
+
+            //bodyList.Add(b1);
+            //bodyList.Add(b2);
+            //bodyList.Add(b3);
+            //bodyList.Add(b4);
         }
 
         public double deg(double rad)
@@ -48,6 +58,7 @@ namespace n_Sim
         private void Form1_Load(object sender, EventArgs e)
         {
             g = this.CreateGraphics();
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             frameUpdater.Start();
         }
         private void mainForm_Paint(object sender, PaintEventArgs e)
@@ -64,20 +75,19 @@ namespace n_Sim
             redrawBodies(bodyList);
         }
 
-        private double getDistanceX(Body body1, Body body2)
-        {
-            return (body2.x - body1.x);
-        }
-
-        private double getDistanceY(Body body1, Body body2)
-        {
-            return (body2.y - body1.y);
-        }
-
         private double getDistance(Body body1, Body body2)
         {
+            int minDist = Convert.ToInt32(body2.radius);
             double xdiff = Math.Abs(body2.x - body1.x);
+            if (xdiff < minDist)
+            {
+                xdiff = minDist;
+            }
             double ydiff = Math.Abs(body2.y - body1.y);
+            if (ydiff < minDist)
+            {
+                ydiff = minDist;
+            }
             return Math.Pow(Math.Pow(xdiff, 2) + Math.Pow(ydiff, 2), 0.5);
         }
 
@@ -145,12 +155,12 @@ namespace n_Sim
 
         private void mainForm_MouseUp(object sender, MouseEventArgs e)
         {
-            double speedFactor = 0.1;
+            double speedFactor = 0.05;
             double xspeed = speedFactor * (dragStartX - Cursor.Position.X);
             double yspeed = speedFactor * (dragStartY - Cursor.Position.Y);
             Random r = new Random();
-            int m = r.Next(500, 1000000);
-            bodyList.Add(new Body(dragStartX, dragStartY, xspeed, yspeed, m));
+            int m = r.Next(10, 10);
+            bodyList.Add(new Body(dragStartX, dragStartY, xspeed, yspeed, m*m*m));
         }
 
     }

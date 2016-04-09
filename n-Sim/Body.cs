@@ -6,7 +6,7 @@ namespace n_Sim
 {
     internal class Body
     {
-        public double x, y, xspeed, yspeed, mass;
+        public double x, y, xspeed, yspeed, mass, radius;
         public string name;
 
         public Body(double x, double y, double xspeed, double yspeed, double mass)
@@ -16,6 +16,7 @@ namespace n_Sim
             this.xspeed = xspeed;
             this.yspeed = yspeed;
             this.mass = mass;
+            this.radius = getRadius();
         }
 
         public void accelerate(double xacc, double yacc)
@@ -39,7 +40,6 @@ namespace n_Sim
         public void drawBody(Graphics g)
         {
             Pen myPen = new Pen(Color.White);
-            double radius = getRadius();
             g.DrawEllipse(myPen, Convert.ToInt32(x - (radius / 2)), Convert.ToInt32(y - (radius / 2)), Convert.ToInt32(radius), Convert.ToInt32(radius));
             myPen.Dispose();
         }
